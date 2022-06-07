@@ -8,9 +8,23 @@
 import SwiftUI
 
 struct SecondPage: View {
+    @EnvironmentObject var coordinator: Coordinator
+    
     var body: some View {
         Text("This is the second page")
-        NavigationLink("back to first page", value: Destination.firstPage)
+        NavigationLink("Go to first page", value: Destination.firstPage)
+            .padding()
+        Button {
+            coordinator.tapOnSecondPage()
+        } label: {
+            Text("Pop to first page")
+        }
+        .padding()
+        Button {
+            coordinator.gotoHomePage()
+        } label: {
+            Text("Back to home page")
+        }
     }
 }
 
