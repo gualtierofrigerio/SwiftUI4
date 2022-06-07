@@ -9,11 +9,17 @@ import SwiftUI
 
 @main
 struct SwiftUI4App: App {
+    @ObservedObject var coordinator = Coordinator()
+    
     var body: some Scene {
         WindowGroup {
-            NavigationStack {
-                ContentView()
+            NavigationStack(path: $coordinator.path) {
+                MainView()
+                    .navigationDestination(for: Destination.self) { destination in
+                        ViewFactory.viewForDestination(destination)
+                    }
             }
+            .environmentObject(coordinator)
         }
     }
 }
