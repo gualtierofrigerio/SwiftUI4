@@ -8,23 +8,24 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var path = NavigationPath()
-    
     var body: some View {
-        NavigationStack(path: $path) {
+        NavigationStack {
             VStack {
-                Text("This is the initial screen")
+                Text("Navigation stack")
                     .padding()
-                NavigationLink("NavigationLink to enter", value: Destination.firstPage)
+                NavigationLink("NavigationLink to enter first page", value: Destination.firstPage)
                     .padding()
-                Button {
-                    path.append(Destination.firstPage)
-                } label: {
-                    Text("Button to enter")
+                NavigationLink("NavigationLink to enter second page", value: Destination.secondPage)
+                    .padding()
+                List(1..<3) { index in
+                    NavigationLink("Nav Link \(index)", value: index)
                 }
             }
             .navigationDestination(for: Destination.self) { destination in
                 ViewFactory.viewForDestination(destination)
+            }
+            .navigationDestination(for: Int.self) { index in
+                Text("index \(index)")
             }
         }
     }
