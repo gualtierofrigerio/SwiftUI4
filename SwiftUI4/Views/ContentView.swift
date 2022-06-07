@@ -8,17 +8,24 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var path = NavigationPath()
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
-            Text("This is the initial screen")
-            NavigationLink("tap to enter", value: Destination.firstPage)
-                .navigationDestination(for: Destination.self) { destination in
-                    ViewFactory.viewForDestination(destination)
+        NavigationStack(path: $path) {
+            VStack {
+                Text("This is the initial screen")
+                    .padding()
+                NavigationLink("NavigationLink to enter", value: Destination.firstPage)
+                    .padding()
+                Button {
+                    path.append(Destination.firstPage)
+                } label: {
+                    Text("Button to enter")
                 }
+            }
+            .navigationDestination(for: Destination.self) { destination in
+                ViewFactory.viewForDestination(destination)
+            }
         }
     }
 }
